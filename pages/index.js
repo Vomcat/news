@@ -10,6 +10,7 @@ export default function Home({countriesData}) {
           <ArticleBox
             key={index}
             name={el.name}
+            id={el.code}
           />
         ))}
         {console.log(countriesData)}
@@ -29,16 +30,7 @@ export async function getStaticProps() {
       query {
         countries {
           name
-          native
-          capital
-          currency
-          continent {
-            name
-          }
-          phone
-          languages {
-            name
-          }
+          code
         }
       }
     `,

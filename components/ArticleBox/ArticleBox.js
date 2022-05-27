@@ -5,7 +5,7 @@ import Link from 'next/link'
 const ArticleBox = ({ name, img, url ,id}) => {
     return (
         <div className={styles['article-box']}>
-            <Link href="/article">
+            <Link href={"/article/" + id } >
                 <div>
                     {name}
                 </div>
