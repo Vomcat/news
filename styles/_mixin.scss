@@ -1,0 +1,23 @@
+@use 'sass:math';
+@use 'sass:list';
+
+$mobile: 375;
+$desktop: 1440;
+
+$media-tablet: 981px;
+
+@mixin mediaMobile() {
+    @media (max-width: #{$media-tablet - 1}) {
+        @content;
+    }
+}
+
+@mixin mediaTablet() {
+    @media (min-width: #{$media-tablet}) {
+        @content;
+    }
+}
+
+@function vw($px, $base) {
+    @return (math.div($px, $base) * 100) * 1vw;
+} ;
