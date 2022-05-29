@@ -1,19 +1,18 @@
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+import ArticleHero from '../../components/ArticleHero/ArticleHero';
 
 export default function Article({article}) {
   return (
-    <div>
-      <h1>ds</h1>
-      <div>
-        {article.title}
-      </div>
-    </div>
+    <ArticleHero
+      title={article.title}
+      articleBody={article.body}
+    />
   )
 }
 
 export async function getStaticProps({params}) {
     const url = params.url
-    const queryUrl = "https://www.pudelek.pl/" + params.url
+    const queryUrl = "https://film.wp.pl/" + params.url
     console.log(url)
     const client = new ApolloClient({
       uri: 'https://mobileapi.wp.pl/v1/graphql',
@@ -25,6 +24,10 @@ export async function getStaticProps({params}) {
         query Test($queryUrl: String!) {
           article(url: $queryUrl) {
             title
+            url
+            body{
+              data
+            }
           }
         }
       `,
@@ -50,7 +53,7 @@ export async function getStaticProps({params}) {
     const { data } = await client.query({
         query: gql`
           query {
-            articles(t:Gallery limit:2) {
+            articles(t:Article cid:4 ) {
               url
             }
           }

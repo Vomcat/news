@@ -1,0 +1,30 @@
+@import '../../styles/mixin';
+
+
+.article{
+
+
+    &__title{
+        font-size: 32px;
+
+        @include mediaTablet(){
+            font-size: 42px;
+        }
+    }
+
+    &__content{
+
+        a {
+            text-decoration: underline;
+            transition: .3s;
+
+            &:hover{
+                color: #258faf;;
+            }
+        }
+
+        p {
+            font-weight: 300;
+        }
+    }
+}
