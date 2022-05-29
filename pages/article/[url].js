@@ -1,41 +1,41 @@
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 
-export default function Article({country}) {
+export default function Article({article}) {
   return (
     <div>
       <h1>ds</h1>
       <div>
-        {country.name}
+        {article.title}
       </div>
     </div>
   )
 }
 
 export async function getStaticProps({params}) {
-    const id = params.id
+    const url = params.url
+    const queryUrl = "https://www.pudelek.pl/" + params.url
+    console.log(url)
     const client = new ApolloClient({
-      uri: 'https://countries.trevorblades.com/',
+      uri: 'https://mobileapi.wp.pl/v1/graphql',
       cache: new InMemoryCache()
     });
 
     const {data} = await client.query({
       query: gql`
-        query Test($id: ID!) {
-            country(code: $id){
-            name
+        query Test($queryUrl: String!) {
+          article(url: $queryUrl) {
+            title
           }
         }
       `,
       variables: {
-          id,
+        queryUrl,
       }
     });
 
-
-
     return {
       props: {
-        country: data.country
+        article: data.article
       }
     }
   }
@@ -43,23 +43,22 @@ export async function getStaticProps({params}) {
 
   export async function getStaticPaths(){
     const client = new ApolloClient({
-        uri: 'https://countries.trevorblades.com/',
+        uri: 'https://mobileapi.wp.pl/v1/graphql',
         cache: new InMemoryCache()
       });
 
     const { data } = await client.query({
         query: gql`
           query {
-            countries {
-              name
-              code
+            articles(t:Gallery limit:2) {
+              url
             }
           }
         `,
       });
 
   return {
-    paths : data.countries.map((country)=> ({params: {id : country.code}})),
+    paths : data.articles.map((el)=> ({params: {url : el.url.split(".pl/")[1]}})),
     fallback: false,
   }
 }

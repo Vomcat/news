@@ -4,16 +4,20 @@ import ArticleBox from '../components/ArticleBox/ArticleBox';
 
 
 export default function Home({countriesData}) {
+
   return (
-    <div className={styles.container}>
-      {countriesData.map((el, index)=>(
-          <ArticleBox
-            key={index}
-            name={el.name}
-            id={el.code}
-          />
-        ))}
-        {console.log(countriesData)}
+    <div className={styles["home"]}>
+      <div className="container flex">
+        {countriesData.map((el, index)=>(
+            <ArticleBox
+              key={index}
+              title={el.title}
+              img={el.img.url}
+              url={el.url.split(".pl/")[1]}
+              id={el.code}
+            />
+          ))}
+      </div>
     </div>
   )
 }
@@ -21,16 +25,20 @@ export default function Home({countriesData}) {
 
 export async function getStaticProps() {
   const client = new ApolloClient({
-    uri: 'https://countries.trevorblades.com/',
+    uri: 'https://mobileapi.wp.pl/v1/graphql',
     cache: new InMemoryCache()
   });
 
   const { data } = await client.query({
     query: gql`
       query {
-        countries {
-          name
-          code
+        articles(t:Gallery limit:2) {
+          id
+          title
+          url
+          img {
+            url
+          }
         }
       }
     `,
@@ -38,7 +46,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      countriesData: data.countries,
+      countriesData: data.articles,
     }
   }
 }
