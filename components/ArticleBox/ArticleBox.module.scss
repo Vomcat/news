@@ -1,0 +1,67 @@
+@import '../../styles/mixin';
+
+.article-box{
+    cursor: pointer;
+
+    @include mediaTablet(){
+        max-width: calc(25% - 15px);
+        flex: 0 0 25%;
+    }
+
+    &:first-of-type{
+
+        @include mediaTablet(){
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+
+        .article-box__image{
+            padding-top: 45%;
+        }
+
+        .article-box__text{
+
+            @include mediaTablet(){
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                color: var(--color-white);
+                font-size: 24px;
+                padding: 40px;
+            }
+        }
+    }
+
+    &__content{
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    &__image{
+        position: relative;
+        padding-top: 60%;
+        overflow: hidden;
+        margin-bottom: 10px;
+
+        @include mediaTablet(){
+            margin-bottom: 20px;
+        }
+
+        img{
+            position: absolute;
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+    }
+
+    &__text{
+        font-weight: 600;
+    }
+
+}

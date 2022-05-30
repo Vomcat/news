@@ -6,14 +6,18 @@ const ArticleBox = ({ title, img, url }) => {
     return (
         <div className={styles['article-box']}>
             <Link href={"/article/" + url } >
-                <div className={styles['article-box__content']}>
-                    <picture>
-                        <img src={img} />
-                    </picture>
-                    <div>
-                        {title}
+                <a>
+                    <div className={styles['article-box__content']}>
+                        <div className={styles['article-box__image']}>
+                            <picture>
+                                <img src={img} />
+                            </picture>
+                        </div>
+                        <div className={styles['article-box__text']}>
+                            {title}
+                        </div>
                     </div>
-                </div>
+                </a>
             </Link>
         </div>
     )
