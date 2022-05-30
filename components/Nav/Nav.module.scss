@@ -1,0 +1,17 @@
+@import '../../styles/mixin';
+
+
+.nav{
+    border-bottom: 1px solid var(--color-primary);
+
+    a {
+        font-weight: 600;
+        background-image: linear-gradient(90deg,#2727ff 0,#f6f 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+        @include mediaTablet(){
+            font-size: 30px;
+        }
+    }
+}
