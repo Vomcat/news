@@ -3,21 +3,21 @@ import ArticleHero from '../../components/ArticleHero/ArticleHero';
 
 export default function Article({article}) {
   return (
-    <ArticleHero
-      title={article.title}
-      articleBody={article.body}
-    />
+      <ArticleHero
+        title={article.title}
+        articleBody={article.body}
+        img={article.img.url}
+      />
   )
 }
 
+const client = new ApolloClient({
+  uri: 'https://mobileapi.wp.pl/v1/graphql',
+  cache: new InMemoryCache()
+});
+
 export async function getStaticProps({params}) {
-    const url = params.url
     const queryUrl = "https://film.wp.pl/" + params.url
-    console.log(url)
-    const client = new ApolloClient({
-      uri: 'https://mobileapi.wp.pl/v1/graphql',
-      cache: new InMemoryCache()
-    });
 
     const {data} = await client.query({
       query: gql`
@@ -25,6 +25,9 @@ export async function getStaticProps({params}) {
           article(url: $queryUrl) {
             title
             url
+            img {
+              url
+            }
             body{
               data
             }
@@ -45,10 +48,6 @@ export async function getStaticProps({params}) {
 
 
   export async function getStaticPaths(){
-    const client = new ApolloClient({
-        uri: 'https://mobileapi.wp.pl/v1/graphql',
-        cache: new InMemoryCache()
-      });
 
     const { data } = await client.query({
         query: gql`
