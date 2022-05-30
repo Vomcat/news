@@ -52,7 +52,7 @@ export async function getStaticProps({params}) {
     const { data } = await client.query({
         query: gql`
           query {
-            articles(t:Article cid:4 ) {
+            articles(t:Article cid:4 offset:1) {
               url
             }
           }
