@@ -12,6 +12,10 @@
         }
     }
 
+    &__image{
+        margin-bottom: 20px;
+    }
+
     &__content{
 
         a {
@@ -19,12 +23,16 @@
             transition: .3s;
 
             &:hover{
-                color: #258faf;;
+                color: var(--color-primary);
             }
         }
 
         p {
             font-weight: 300;
+
+            strong{
+                font-weight: 500;
+            }
         }
     }
 }
