@@ -1,6 +1,10 @@
-import styles from '../styles/Home.module.scss'
-import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+import {gql} from '@apollo/client';
+
+import client from '../helpers/client';
 import ArticleBox from '../components/ArticleBox/ArticleBox';
+
+import styles from '../styles/Home.module.scss'
+
 
 export default function Home({articlesData}) {
 
@@ -21,11 +25,7 @@ export default function Home({articlesData}) {
 }
 
 
-export async function getStaticProps() {
-  const client = new ApolloClient({
-    uri: 'https://mobileapi.wp.pl/v1/graphql',
-    cache: new InMemoryCache()
-  });
+export async function getServerSideProps() {
 
   const { data } = await client.query({
     query: gql`

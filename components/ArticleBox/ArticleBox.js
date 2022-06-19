@@ -1,6 +1,6 @@
-import styles from './ArticleBox.module.scss'
 import Link from 'next/link'
 
+import styles from './ArticleBox.module.scss'
 
 const ArticleBox = ({ title, img, url }) => {
     return (

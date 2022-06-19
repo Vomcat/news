@@ -1,4 +1,7 @@
-import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+import {gql } from '@apollo/client';
+
+import client from '../../helpers/client';
+
 import ArticleHero from '../../components/ArticleHero/ArticleHero';
 
 export default function Article({article}) {
@@ -11,13 +14,12 @@ export default function Article({article}) {
   )
 }
 
-const client = new ApolloClient({
-  uri: 'https://mobileapi.wp.pl/v1/graphql',
-  cache: new InMemoryCache()
-});
+export async function getServerSideProps(context){
+  const {params} = context
+  const {url} = params
 
-export async function getStaticProps({params}) {
-    const queryUrl = "https://film.wp.pl/" + params.url
+
+    const queryUrl = "https://film.wp.pl/" + url
 
     const {data} = await client.query({
       query: gql`
@@ -40,27 +42,9 @@ export async function getStaticProps({params}) {
     });
 
     return {
-      props: {
-        article: data.article
+      props:{
+        article: data.article,
+        url
       }
     }
-  }
-
-
-  export async function getStaticPaths(){
-
-    const { data } = await client.query({
-        query: gql`
-          query {
-            articles(t:Article cid:4 offset:1) {
-              url
-            }
-          }
-        `,
-      });
-
-  return {
-    paths : data.articles.map((el)=> ({params: {url : el.url.split(".pl/")[1]}})),
-    fallback: false,
-  }
 }
